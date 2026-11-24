@@ -1,0 +1,96 @@
+{
+  "title": "Measurement LTS Backfill",
+  "config": {
+    "abort": {
+      "already_configured": "L\u2019integrazione \u00e8 gi\u00e0 configurata."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Scegli come selezionare i sensori",
+        "menu_options": {
+          "select": "Seleziona manualmente",
+          "find": "Trova sensori senza LTS storiche"
+        },
+        "description": "La ricerca precompila i sensori con letture disponibili e senza LTS, oppure con letture precedenti alla prima LTS."
+      },
+      "confirm": {
+        "title": "Anteprima per {count} sensori",
+        "description": "Se abiliti la sostituzione, vengono aggiornate solo le ore con valori diversi.\n\n| Sensore | Ore nuove | Uguali | Diverse | Ore LTS senza confronto | Ore senza dati | 5 min nuovi | 5 min presenti | 5 min fuori retention | 5 min da eliminare |\n|---|---|---|---|---|---|---|---|---|---|\n{rows}\n\nSensori esclusi per metadati mancanti: {not_ready}. Sensori esclusi per metadati o unit\u00e0 incompatibili: {incompatible}.",
+        "data": {
+          "apply": "Confermo l\u2019operazione",
+          "replace_conflicts": "Sostituisci le statistiche con valori diversi"
+        }
+      },
+      "range": {
+        "title": "Intervallo per {count} sensori",
+        "description": "Il primo stato disponibile tra i sensori selezionati risale al {first}. Le date sono inclusive e usano il fuso orario di Home Assistant. Attiva il purge per applicare lo stesso limite allo storico dettagliato e alle statistiche a 5 minuti.",
+        "data": {
+          "start_date": "Data iniziale",
+          "end_date": "Data finale",
+          "keep_days": "Giorni da conservare se attivi il purge",
+          "include_short_term": "Ricostruisci anche le statistiche a 5 minuti",
+          "purge": "Elimina dati pi\u00f9 vecchi del limite per questo sensore"
+        }
+      },
+      "confirm_purge": {
+        "title": "Anteprima per {count} sensori",
+        "description": "Se abiliti la sostituzione, vengono aggiornate solo le ore con valori diversi. Il purge conserva {keep_days} giorni di storico dettagliato e di statistiche a 5 minuti per tutti i sensori elencati. Le LTS orarie restano.\n\n| Sensore | Ore nuove | Uguali | Diverse | Ore LTS senza confronto | Ore senza dati | 5 min nuovi | 5 min presenti | 5 min fuori retention | 5 min da eliminare |\n|---|---|---|---|---|---|---|---|---|---|\n{rows}\n\nSensori esclusi per metadati mancanti: {not_ready}. Sensori esclusi per metadati o unit\u00e0 incompatibili: {incompatible}.",
+        "data": {
+          "apply": "Confermo l\u2019operazione",
+          "replace_conflicts": "Sostituisci le statistiche con valori diversi"
+        }
+      },
+      "select": {
+        "title": "Seleziona i sensori",
+        "description": "Digita il nome o l\u2019ID e aggiungi uno o pi\u00f9 sensori measurement inclusi in Recorder.",
+        "data": {
+          "entity_ids": "Sensori"
+        }
+      },
+      "preview_work": {
+        "title": "Prescansione dei sensori"
+      },
+      "apply_work": {
+        "title": "Salvataggio delle statistiche"
+      }
+    },
+    "error": {
+      "missing_metadata": "Almeno un sensore attende i metadati nativi di Recorder. Riprova dopo il prossimo ciclo di statistiche a 5 minuti.",
+      "incompatible_metadata": "I metadati delle statistiche esistenti o la loro unit\u00e0 sono incompatibili con il sensore.",
+      "invalid_entity": "Seleziona un sensore measurement incluso in Recorder.",
+      "invalid_dates": "Scegli date comprese nello storico, con almeno un\u2019ora terminata.",
+      "recorder_unavailable": "Recorder non \u00e8 disponibile.",
+      "failed": "La lettura non \u00e8 riuscita. Controlla il log di Home Assistant.",
+      "no_history": "Recorder non ha storico dettagliato per: {missing_entities}.",
+      "invalid_keep_days": "Inserisci un numero intero di giorni tra 0 e 365.000.",
+      "no_backfill_matches": "Nessun sensore con storico precedente alle LTS. Puoi selezionare i sensori manualmente.",
+      "operation_running": "Operazione gi\u00e0 in corso. Attendi la conclusione o usa l\u2019azione measurement_lts.cancel."
+    },
+    "abort": {
+      "no_sensors": "Nessun sensore measurement incluso in Recorder.",
+      "nothing_to_add": "Nessuna modifica da applicare.\n\n| Sensore | Ore nuove | Uguali | Diverse | Ore LTS senza confronto | Ore senza dati | 5 min nuovi | 5 min presenti | 5 min fuori retention | 5 min da eliminare |\n|---|---|---|---|---|---|---|---|---|---|\n{rows}\n\nSensori esclusi per metadati mancanti: {not_ready}. Sensori esclusi per metadati o unit\u00e0 incompatibili: {incompatible}.",
+      "cancelled": "Importazione annullata.",
+      "completed": "Importazione completata. Ore aggiunte: {added}. Ore sostituite: {replaced}. Blocchi a 5 minuti aggiunti: {short_added}.\n\nSensori esclusi per metadati mancanti: {not_ready}. Sensori esclusi per metadati o unit\u00e0 incompatibili: {incompatible}.",
+      "history_changed": "Lo storico \u00e8 cambiato dopo l\u2019anteprima. Genera una nuova anteprima e riprova.",
+      "failed": "L\u2019importazione non \u00e8 riuscita. Controlla il log di Home Assistant.",
+      "purge_queued": "Ore aggiunte: {added}. Ore sostituite: {replaced}. Blocchi a 5 minuti aggiunti: {short_added}. Blocchi a 5 minuti rimossi: {short_purged}. Purge dello storico oltre {keep_days} giorni in coda.\n\nSensori esclusi per metadati mancanti: {not_ready}. Sensori esclusi per metadati o unit\u00e0 incompatibili: {incompatible}.",
+      "statistics_changed": "Le statistiche da sostituire sono cambiate dopo l\u2019anteprima. Genera una nuova anteprima.",
+      "no_ready_sensors": "Nessun sensore pronto per il backfill.\n\nSensori esclusi per metadati mancanti: {not_ready}. Sensori esclusi per metadati o unit\u00e0 incompatibili: {incompatible}.",
+      "operation_running": "Operazione gi\u00e0 in corso. Attendi la conclusione o usa l\u2019azione measurement_lts.cancel.",
+      "work_cancelled": "Operazione annullata. Nessuna modifica di questa operazione \u00e8 stata salvata e il purge non \u00e8 partito."
+    },
+    "progress": {
+      "preview": "In analisi: **{sensor}** (`{entity_id}`).\n\nSensori completati: **{completed}/{total}**.\n\nPer annullare prima della conferma della scrittura, chiudi questa finestra.",
+      "apply": "In elaborazione: **{sensor}** (`{entity_id}`).\n\nSensori elaborati: **{completed}/{total} ({percent}%)**. La conferma arriva a scrittura completata.\n\nPer annullare prima della conferma della scrittura, chiudi questa finestra.",
+      "cancelling": "Annullamento in corso. Attendi che Recorder raggiunga un punto sicuro."
+    }
+  },
+  "services": {
+    "cancel": {
+      "name": "Annulla operazione LTS",
+      "description": "Richiede l\u2019annullamento e attende la conferma di Recorder. Se la scrittura \u00e8 gi\u00e0 in fase di commit, restituisce too_late."
+    }
+  }
+}

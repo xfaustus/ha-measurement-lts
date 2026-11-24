@@ -1,0 +1,96 @@
+{
+  "title": "Measurement LTS Backfill",
+  "config": {
+    "abort": {
+      "already_configured": "The integration is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Choose how to select sensors",
+        "menu_options": {
+          "select": "Select manually",
+          "find": "Find sensors without historical LTS"
+        },
+        "description": "Search preselects sensors with retained readings and no LTS, or readings older than their first LTS."
+      },
+      "confirm": {
+        "title": "Preview for {count} sensors",
+        "description": "If replacement is enabled, only hours with different values are updated.\n\n| Sensor | New hours | Matching | Different | Existing hours without comparison | No data hours | New 5 min | Existing 5 min | 5 min outside retention | 5 min to remove |\n|---|---|---|---|---|---|---|---|---|---|\n{rows}\n\nSkipped for missing metadata: {not_ready}. Skipped for incompatible metadata or units: {incompatible}.",
+        "data": {
+          "apply": "Confirm operation",
+          "replace_conflicts": "Replace statistics with different values"
+        }
+      },
+      "range": {
+        "title": "Date range for {count} sensors",
+        "description": "The earliest recorded state among those sensors is from {first}. Dates are inclusive and use the Home Assistant time zone. Enable purge to use one limit for detailed history and five-minute statistics.",
+        "data": {
+          "start_date": "Start date",
+          "end_date": "End date",
+          "keep_days": "Days to retain if purge is enabled",
+          "include_short_term": "Rebuild five-minute statistics as well",
+          "purge": "Purge data older than the retention limit for this sensor"
+        }
+      },
+      "confirm_purge": {
+        "title": "Preview for {count} sensors",
+        "description": "If replacement is enabled, only hours with different values are updated. Purge keeps {keep_days} days of detailed history and five-minute statistics for all listed sensors. Hourly statistics are retained.\n\n| Sensor | New hours | Matching | Different | Existing hours without comparison | No data hours | New 5 min | Existing 5 min | 5 min outside retention | 5 min to remove |\n|---|---|---|---|---|---|---|---|---|---|\n{rows}\n\nSkipped for missing metadata: {not_ready}. Skipped for incompatible metadata or units: {incompatible}.",
+        "data": {
+          "apply": "Confirm operation",
+          "replace_conflicts": "Replace statistics with different values"
+        }
+      },
+      "select": {
+        "title": "Select sensors",
+        "description": "Type a name or ID and add one or more recorded measurement sensors.",
+        "data": {
+          "entity_ids": "Sensors"
+        }
+      },
+      "preview_work": {
+        "title": "Sensor preview"
+      },
+      "apply_work": {
+        "title": "Saving statistics"
+      }
+    },
+    "error": {
+      "missing_metadata": "At least one sensor is waiting for native Recorder metadata. Retry after the next five-minute statistics cycle.",
+      "incompatible_metadata": "The existing statistics metadata or unit is incompatible with this sensor.",
+      "invalid_entity": "Select a recorded measurement sensor.",
+      "invalid_dates": "Choose dates within the recorded range with at least one completed hour.",
+      "recorder_unavailable": "Recorder is unavailable.",
+      "failed": "Preview failed. Check the Home Assistant log.",
+      "no_history": "Recorder has no detailed history for: {missing_entities}.",
+      "invalid_keep_days": "Enter a whole number of days between 0 and 365,000.",
+      "no_backfill_matches": "No sensors have retained history before their LTS. You can select sensors manually.",
+      "operation_running": "An operation is running. Wait for it to finish or use the measurement_lts.cancel action."
+    },
+    "abort": {
+      "no_sensors": "No recorded measurement sensors are available.",
+      "nothing_to_add": "No changes to apply.\n\n| Sensor | New hours | Matching | Different | Existing hours without comparison | No data hours | New 5 min | Existing 5 min | 5 min outside retention | 5 min to remove |\n|---|---|---|---|---|---|---|---|---|---|\n{rows}\n\nSkipped for missing metadata: {not_ready}. Skipped for incompatible metadata or units: {incompatible}.",
+      "cancelled": "Import cancelled.",
+      "completed": "Import completed. Hours added: {added}. Hours replaced: {replaced}. Five-minute blocks added: {short_added}.\n\nSkipped for missing metadata: {not_ready}. Skipped for incompatible metadata or units: {incompatible}.",
+      "history_changed": "History changed after preview. Generate a fresh preview and try again.",
+      "failed": "Import failed. Check the Home Assistant log.",
+      "purge_queued": "Hours added: {added}. Hours replaced: {replaced}. Five-minute blocks added: {short_added}. Five-minute blocks removed: {short_purged}. Detailed history purge beyond {keep_days} days queued.\n\nSkipped for missing metadata: {not_ready}. Skipped for incompatible metadata or units: {incompatible}.",
+      "statistics_changed": "Statistics selected for replacement changed after preview. Run a new preview.",
+      "no_ready_sensors": "No sensors are ready for backfill.\n\nSkipped for missing metadata: {not_ready}. Skipped for incompatible metadata or units: {incompatible}.",
+      "operation_running": "An operation is running. Wait for it to finish or use the measurement_lts.cancel action.",
+      "work_cancelled": "Operation cancelled. No changes from this operation were committed and purge was not queued."
+    },
+    "progress": {
+      "preview": "Analyzing **{sensor}** (`{entity_id}`).\n\nSensors finished: **{completed}/{total}**.\n\nClose this dialog to request cancellation before the database commit.",
+      "apply": "Processing **{sensor}** (`{entity_id}`).\n\nSensors processed: **{completed}/{total} ({percent}%)**. Confirmation follows the database commit.\n\nClose this dialog to request cancellation before the database commit.",
+      "cancelling": "Cancellation requested. Waiting for Recorder to reach a safe point."
+    }
+  },
+  "services": {
+    "cancel": {
+      "name": "Cancel LTS operation",
+      "description": "Requests cancellation and waits for Recorder. Returns too_late once commit has started."
+    }
+  }
+}

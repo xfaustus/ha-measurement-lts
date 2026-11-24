@@ -1,0 +1,16 @@
+{
+  "domain": "measurement_lts",
+  "name": "Measurement LTS Backfill",
+  "codeowners": [
+    "@xfaustus"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "recorder"
+  ],
+  "documentation": "https://github.com/xfaustus/ha-measurement-lts",
+  "issue_tracker": "https://github.com/xfaustus/ha-measurement-lts/issues",
+  "integration_type": "service",
+  "iot_class": "local_push",
+  "version": "0.3.12"
+}
